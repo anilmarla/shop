@@ -1,5 +1,6 @@
 package com.anil.shop.discovery
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -29,17 +30,20 @@ class CardListAdapter(private val listener: CardListAdapterListener) :
 
     class CardViewHolder(val binding: ListItemCardBinding, val listener: CardListAdapterListener) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Card) {
+        fun bind(item: Product) {
             binding.textImageName.text = item.name
             binding.textDiscountedPrice.text = item.discountedPrice
             binding.txtOriginalPrice.text = item.originalPrice
+
+            // strike original price
+            binding.txtOriginalPrice.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
             binding.txtDiscountedPercentage.text = item.discountedPercentage
             binding.txtTotalPercentage.text = item.totalPercentage
 
             Glide.with(binding.root.context).load(item.image).centerCrop().into(binding.image)
 
             binding.root.setOnClickListener {
-                listener.onCardClicked(card = item)
+                listener.onCardClicked(item)
             }
 
         }
@@ -57,7 +61,7 @@ class CardListAdapter(private val listener: CardListAdapterListener) :
         if (holder is HeadingViewHolder) {
             holder.bind(getItem(position) as Heading)
         } else if (holder is CardViewHolder) {
-            holder.bind(getItem(position) as Card)
+            holder.bind(getItem(position) as Product)
         }
     }
 

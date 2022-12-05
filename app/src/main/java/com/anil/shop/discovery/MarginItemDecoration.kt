@@ -10,6 +10,7 @@ class MarginItemDecoration(
     private val spanCount: Int = 1,
     private val orientation: Int = GridLayoutManager.VERTICAL
 ) : RecyclerView.ItemDecoration() {
+
     override fun getItemOffsets(
         outRect: Rect, view: View,
         parent: RecyclerView, state: RecyclerView.State

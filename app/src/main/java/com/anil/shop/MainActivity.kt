@@ -1,13 +1,17 @@
 package com.anil.shop
 
-import androidx.appcompat.app.AppCompatActivity
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.anil.shop.account.AccountFragment
+import com.anil.shop.cart.CartFragment
+import com.anil.shop.catalogue.CatalogueFragment
 import com.anil.shop.databinding.ActivityMainBinding
-import com.anil.shop.databinding.DiscoveryFragmentBinding
 import com.anil.shop.discovery.DiscoveryFragment
+import com.anil.shop.wishlist.WishlistFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -18,23 +22,39 @@ class MainActivity : AppCompatActivity() {
 
         initBottomNavigation()
 
+        //loading first fragment on app launch
+
         loadFragment("Discover", DiscoveryFragment.newInstance())
+
     }
 
-    private fun loadFragment(discover: String, fragment: Fragment) {
+    private fun loadFragment(title: String, fragment: Fragment) {
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, fragment)
-            .commit()
+        supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
 
-        setTitle(discover)
+        setTitle(title)
     }
 
     private fun initBottomNavigation() {
-        binding.bottomNavigation.setOnClickListener {
-            when(it.id) {
-                R.id.discover -> loadFragment("Discover", DiscoveryFragment.newInstance())
+        binding.bottomNavigation.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.discover -> loadFragment(
+                    getString(R.string.discover), DiscoveryFragment.newInstance()
+                )
+                R.id.catalogue -> loadFragment(
+                    getString(R.string.catalogue), CatalogueFragment.newInstance()
+                )
+                R.id.cart -> loadFragment(getString(R.string.cart), CartFragment.newInstance())
+                R.id.wishlist -> loadFragment(
+                    getString(R.string.wishlist), WishlistFragment.newInstance()
+                )
+                R.id.account -> loadFragment(
+                    getString(R.string.account),
+                    AccountFragment.newInstance()
+                )
+
             }
+            return@setOnItemSelectedListener true
         }
     }
 

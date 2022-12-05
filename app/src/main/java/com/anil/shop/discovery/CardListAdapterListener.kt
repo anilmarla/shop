@@ -1,6 +1,6 @@
 package com.anil.shop.discovery
 
 interface CardListAdapterListener {
-    fun onCardClicked(card: BaseItem)
+    fun onCardClicked(product: Product)
 
 }
